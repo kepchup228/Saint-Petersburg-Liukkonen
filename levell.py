@@ -14,9 +14,7 @@ class StartScreen:
             "Набирайте очки, повышайте уровень и становитесь сильнее!",
             "",
             "### Управление",
-            "- **Стрелки влево/вправо**: Двигайте персонажа влево или вправо.",
-            "- **Пробел**: Прыжок (если такая механика предусмотрена).",
-            "- **Клавиша 'R'**: Начать игру заново после завершения.",
+            "- **Стрелки влево/вправо/вниз/вверх**: Двигайте персонажа влево или вправо.",
             "",
             "### Как играть",
             "1. **Начало игры**: После запуска игры вы увидите экран с кнопкой 'Начать'. Нажмите на неё, чтобы начать.",
@@ -37,7 +35,7 @@ class StartScreen:
         title_text = self.title_font.render("Как играть", True, (0, 0, 0))
         surface.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 2 - 300))
 
-        # Отображение инструкций
+        # инструкция
         for i, line in enumerate(self.instructions):
             instruction_text = self.font.render(line, True, (0, 0, 0))
             surface.blit(instruction_text, (50, HEIGHT // 2 - 200 + i * 30))
@@ -49,10 +47,9 @@ class StartScreen:
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.play_button.collidepoint(event.pos):
-                return True  # Начать игру
+                return True  # начать игру
         return False
 
-# В main.py измените функцию main
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))

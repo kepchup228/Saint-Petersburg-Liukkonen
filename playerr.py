@@ -10,17 +10,17 @@ class Player:
             self.image = pygame.Surface((50, 50))
         else:
             original_image = pygame.image.load(self.image_path)
-            self.image = pygame.transform.scale(original_image, (50, 50))  # Изменение размера
+            self.image = pygame.transform.scale(original_image, (50, 50))  # изменение размера
 
         self.rect = self.image.get_rect()
-        self.rect.topleft = (100, 100)  # Начальная позиция игрока
+        self.rect.topleft = (100, 100)  # начальная позиция игрока
         self.speed = 5
         self.health = 100
-        self.invulnerability_timer = 0  # Время последнего урона
-        self.invulnerability_duration = 200  # Длительность неуязвимости в миллисекундах
-        self.coins_collected = 0  # Собранные монеты
-        self.level = 1  # Уровень игрока
-        self.base_speed = 5  # Базовая скорость для роста
+        self.invulnerability_timer = 0  # время последнего урона
+        self.invulnerability_duration = 200  # длительность неуязвимости
+        self.coins_collected = 0  # собранные монеты
+        self.level = 1  # уровень игрока
+        self.base_speed = 5  # базовая скорость для роста
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -36,10 +36,10 @@ class Player:
     def draw(self, surface):
         current_time = pygame.time.get_ticks()
         if current_time - self.invulnerability_timer < self.invulnerability_duration:
-            # Рисовать игрока полупрозрачным во время неуязвимости
+            # рисовать игрока полупрозрачным во время неуязвимости
             self.image.set_alpha(128)
         else:
-            self.image.set_alpha(255)  # Полная непрозрачность
+            self.image.set_alpha(255)  #непрозрачность
 
         surface.blit(self.image, self.rect)
 
@@ -51,23 +51,23 @@ class Player:
         bar_x = self.rect.x + (self.rect.width - bar_width) // 2
         bar_y = self.rect.y - 15
 
-        # Рисуем красный фон шкалы
+        # рисуем красный фон шкалы
         pygame.draw.rect(surface, RED, (bar_x, bar_y, bar_width, bar_height))
-        # Рисуем зеленую часть шкалы
+        # рисуем зеленую часть шкалы
         pygame.draw.rect(surface, GREEN, (bar_x, bar_y, bar_width * health_ratio, bar_height))
 
     def take_damage(self, damage):
         current_time = pygame.time.get_ticks()
         if current_time - self.invulnerability_timer > self.invulnerability_duration:
             self.health -= damage
-            self.invulnerability_timer = current_time  # Устанавливаем время последнего урона
+            self.invulnerability_timer = current_time  #время последнего урона
             if self.health < 0:
-                self.health = 0  # Чтобы здоровье не уходило в минус
+                self.health = 0  # чтобы здоровье не уходило в минус
 
     def level_up(self):
-        if self.level < 20:  # Максимальный уровень - 20
+        if self.level < 20:  # максимальный уровень
             self.level += 1
-            self.coins_collected = 0  # Обнуляем счёт монет
-            self.speed = self.base_speed * (1 + 0.05 * self.level)  # Увеличиваем скорость
+            self.coins_collected = 0  # обнуляем счёт монет
+            self.speed = self.base_speed * (1 + 0.05 * self.level)  # увеличиваем скорость
         if self.level >= 20:
             self.level = 20
